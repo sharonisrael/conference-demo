@@ -1,8 +1,12 @@
 package com.pluralsight.conferencedemo.controllers;
 
+import com.pluralsight.conferencedemo.AppConfig;
 import com.pluralsight.conferencedemo.models.Session;
 import com.pluralsight.conferencedemo.repositories.SessionRepository;
 import com.pluralsight.conferencedemo.repositories.SessionRepositoryMock;
+import org.apache.catalina.core.ApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -15,7 +19,37 @@ import java.util.Collection;
 @RequestMapping("/api/v1/sessions")
 public class SessionsController {
 
-    private SessionRepository sessionRepository = new SessionRepositoryMock();
+    private SessionRepository sessionRepository;
+
+    public SessionsController() {
+        //AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+        // Or can register several configuration classes and then need to refresh
+//        ctx.register(AppConfig.class);
+//        ctx.refresh()
+
+        //this.sessionRepository = ctx.getBean("sessionRepository", SessionRepository.class);
+
+        // original version without Beans dependency injection
+        //private SessionRepository sessionRepository = new SessionRepositoryMock();
+    }
+
+    /**
+     * It's really amazing it knows to take from the registries in AppConfig the bean and run it
+     * @param sessionRepository session repository from bean
+     */
+    @Autowired
+    public SessionsController(SessionRepository sessionRepository) {
+        this.sessionRepository = sessionRepository;
+    }
+
+    /*
+    This can be also possible
+    @Autowired
+    public void setSessionRepository(SessionRepository sessionRepository) {
+        this.sessionRepository = sessionRepository;
+    }
+    */
+
 
     /**
      * In browser use localhost:8080//api/v1/sessions
