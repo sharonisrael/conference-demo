@@ -13,4 +13,5 @@ public interface SessionRepository {
 
     Session updateSession(Long id, Session session);
 
+    Session findSessionId(Long id);
 }

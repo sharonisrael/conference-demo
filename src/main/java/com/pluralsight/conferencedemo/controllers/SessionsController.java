@@ -114,4 +114,15 @@ public class SessionsController {
     public Session updateSession(@PathVariable Long id, @RequestBody Session session) {
         return sessionRepository.updateSession(id, session);
     }
+
+    public Session findSessionId(long l) throws RuntimeException {
+        // return null;
+//        return sessionRepository.findSessionId(l);
+
+        Session session =  sessionRepository.findSessionId(l);
+        if (session == null) {
+            throw new RuntimeException("Room " + l + " is missing");
+        }
+        return session;
+    }
 }

@@ -40,4 +40,9 @@ public class SessionRepositoryMock implements SessionRepository {
     public Session updateSession(Long id, Session session) {
         return sessionsMap.put(id, session);
     }
+
+    @Override
+    public Session findSessionId(Long id) {
+        return sessionsMap.get(id);
+    }
 }
