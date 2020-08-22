@@ -32,12 +32,18 @@ public class SessionRepositoryMock2 implements SessionRepository {
 
     @Override
     public Session createSession(Session session) {
-        return sessionsMap.put(3L, session);
+        // I cannot just return the sessionMap.put because returns the previous value associated with key,
+        // or null if there was no mapping for key
+        sessionsMap.put(3L, session);
+        return session;
     }
 
     @Override
     public Session updateSession(Long id, Session session) {
-        return sessionsMap.put(id, session);
+        // I cannot just return the sessionMap.put because returns the previous value associated with key,
+        // or null if there was no mapping for key
+        sessionsMap.put(id, session);
+        return session;
     }
 
     @Override
